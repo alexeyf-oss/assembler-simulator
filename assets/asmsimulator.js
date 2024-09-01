@@ -325,7 +325,7 @@ var app = angular.module('ASMSimulator', []);
                                     break;
                                 case 'LOOP':
                                     p1 = getValue(match[op1_group]);
-                                    code.push(98, p1.value)
+                                    code.push(opcodes.LOOP, p1.value)
                                     break;
                                 case 'JMP':
                                     p1 = getValue(match[op1_group]);
@@ -924,6 +924,19 @@ var app = angular.module('ASMSimulator', []);
                             self.ip++;
                         }
                         break;
+                    case opcodes.LOOP:
+                        number = memory.load(++self.ip);
+
+                        cval = getGPR_SP(2);
+
+                        if (cval > 1) {
+                            setGPR_SP(2, cval-1);
+                            jump(number);
+                        } else {
+                            setGPR_SP(2, 0);
+                            self.ip++;
+                        }
+                        break;
                     case opcodes.JNC_REGADDRESS:
                         regTo = checkGPR(memory.load(++self.ip));
                         if (!self.carry) {
@@ -1346,7 +1359,8 @@ var app = angular.module('ASMSimulator', []);
         SHR_REG_WITH_REG: 94,
         SHR_REGADDRESS_WITH_REG: 95,
         SHR_ADDRESS_WITH_REG: 96,
-        SHR_NUMBER_WITH_REG: 97
+        SHR_NUMBER_WITH_REG: 97,
+        LOOP: 98
     };
 
     return opcodes;
