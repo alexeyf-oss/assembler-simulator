@@ -323,6 +323,10 @@ var app = angular.module('ASMSimulator', []);
 
                                     code.push(opCode, p1.value, p2.value);
                                     break;
+                                case 'LOOP':
+                                    p1 = getValue(match[op1_group]);
+                                    code.push(opcodes.LOOP, p1.value)
+                                    break;
                                 case 'JMP':
                                     p1 = getValue(match[op1_group]);
                                     checkNoExtraArg('JMP', match[op2_group]);
