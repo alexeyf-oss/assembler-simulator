@@ -327,7 +327,7 @@ var app = angular.module('ASMSimulator', []);
                                     p1 = getValue(match[op1_group]);
                                     code.push(opcodes.LOOP, p1.value);
                                     break;
-                                case 'SYSCALL':
+                                case 'SYSC':
                                     p1 = getValue(match[op1_group]);
                                     code.push(opcodes.SYSCALL, p1.value);
                                     break;
