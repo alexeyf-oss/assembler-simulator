@@ -325,7 +325,7 @@ var app = angular.module('ASMSimulator', []);
                                     break;
                                 case 'LOOP':
                                     p1 = getValue(match[op1_group]);
-                                    code.push(opcodes.LOOP, p1.value)
+                                    code.push(98, p1.value)
                                     break;
                                 case 'JMP':
                                     p1 = getValue(match[op1_group]);
