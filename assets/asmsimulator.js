@@ -325,7 +325,11 @@ var app = angular.module('ASMSimulator', []);
                                     break;
                                 case 'LOOP':
                                     p1 = getValue(match[op1_group]);
-                                    code.push(opcodes.LOOP, p1.value)
+                                    code.push(opcodes.LOOP, p1.value);
+                                    break;
+                                case 'SYSCALL':
+                                    p1 = getValue(match[op1_group]);
+                                    code.push(opcodes.SYSCALL, p1.value);
                                     break;
                                 case 'JMP':
                                     p1 = getValue(match[op1_group]);
@@ -937,6 +941,17 @@ var app = angular.module('ASMSimulator', []);
                             self.ip++;
                         }
                         break;
+                    case opcodes.SYSCALL:
+                        syscall = memory.load(++self.ip);
+
+                        switch (syscall) {
+                            case 1: memory.store(150, 17);
+                                break;
+                            default:
+                                throw "invalid system call " + syscall;
+                        }
+                        self.ip++
+                        break;
                     case opcodes.JNC_REGADDRESS:
                         regTo = checkGPR(memory.load(++self.ip));
                         if (!self.carry) {
@@ -1360,7 +1375,8 @@ var app = angular.module('ASMSimulator', []);
         SHR_REGADDRESS_WITH_REG: 95,
         SHR_ADDRESS_WITH_REG: 96,
         SHR_NUMBER_WITH_REG: 97,
-        LOOP: 98
+        LOOP: 98,
+        SYSCALL: 99
     };
 
     return opcodes;
@@ -1379,7 +1395,8 @@ var app = angular.module('ASMSimulator', []);
     $scope.speeds = [{speed: 1, desc: "1 HZ"},
                      {speed: 4, desc: "4 HZ"},
                      {speed: 8, desc: "8 HZ"},
-                     {speed: 16, desc: "16 HZ"}];
+                     {speed: 16, desc: "16 HZ"},
+                     {speed: 128, desc: "128 Hz"}];
     $scope.speed = 4;
     $scope.outputStartIndex = 232;
 
