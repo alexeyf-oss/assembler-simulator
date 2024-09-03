@@ -1253,6 +1253,7 @@ var app = angular.module('ASMSimulator', []);
             var self = this;
             self.maxSP = 231;
             self.minSP = 0;
+            self.systemStart = Date.now();
 
             self.gpr = [0, 0, 0, 0];
             self.sp = self.maxSP;
@@ -1292,8 +1293,6 @@ var app = angular.module('ASMSimulator', []);
         },
         reset: function () {
             var self = this;
-
-            self.systemStart = Date.now();
 
             self.lastAccess = -1;
             for (var i = 0, l = self.data.length; i < l; i++) {
