@@ -771,7 +771,7 @@ var app = angular.module('ASMSimulator', []);
                 
                 var regTo, regFrom, memFrom, memTo, number;
                 var instr = memory.load(self.ip);
-                var systemStart = Date.now();
+                var systemStart = cpu.systemStart;
                 switch(instr) {
                     case opcodes.NONE:
                         return false; // Abort step
@@ -1292,6 +1292,8 @@ var app = angular.module('ASMSimulator', []);
         },
         reset: function () {
             var self = this;
+
+            self.systemStart = Date.now();
 
             self.lastAccess = -1;
             for (var i = 0, l = self.data.length; i < l; i++) {
