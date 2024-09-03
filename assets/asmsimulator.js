@@ -947,9 +947,12 @@ var app = angular.module('ASMSimulator', []);
                         aval = getGPR_SP(0);
 
                         switch (syscall) {
-                            case 1: 
+                            case 1:
                                 timePassed = Math.floor((Date.now() - systemStart)/1000) % 256;
                                 memory.store(aval, timePassed);
+                                break;
+                            case 2:
+                                cpu.systemStart = Date.now();
                                 break;
                             default:
                                 throw "invalid system call " + syscall;
