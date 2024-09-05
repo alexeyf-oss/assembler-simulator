@@ -1255,7 +1255,7 @@ var app = angular.module('ASMSimulator', []);
         reset: function() {
             var self = this;
             self.maxSP = 231;
-            self.minSP = 0;
+            self.minSP = 150;
             self.systemStart = Date.now();
 
             self.gpr = [0, 0, 0, 0];
